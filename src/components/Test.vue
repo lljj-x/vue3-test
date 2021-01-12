@@ -5,6 +5,7 @@
     <br>
     <p>{{ state.a }}</p>
     <p>{{ state.count }}</p>
+    <p>{{ state1.z.a }}</p>
   </div>
 </template>
 
@@ -20,9 +21,22 @@ export default {
   },
   setup(props, context) {
     let count = ref(0);
+
     const state = reactive({
       a: 'a',
       c: 1,
+      z: {
+        a: 'zzzaaa11'
+      },
+      count
+    })
+
+    const state1 = ref({
+      a: 'a',
+      c: 1,
+      z: {
+        a: 'zzzaaa11'
+      },
       count
     })
     const copyState = readonly(state);
@@ -52,6 +66,11 @@ export default {
       count.value ++;
     }, 1000);
 
+    setTimeout(() => {
+      state.z.a = 'ddddd';
+      state1.value.z.a = 'ddccc';
+    }, 5000);
+
     watch(() => state.count, (newVal, oldVal) => {
       console.log(newVal);
     });
@@ -68,7 +87,8 @@ export default {
 
     return {
       count,
-      state
+      state,
+      state1
     }
   }
 }
